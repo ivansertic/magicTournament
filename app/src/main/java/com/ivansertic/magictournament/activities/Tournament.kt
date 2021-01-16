@@ -12,10 +12,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.ivansertic.magictournament.R
+import java.io.IOException
 
 class Tournament : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,17 +40,23 @@ class Tournament : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val geocoder: Geocoder = Geocoder(this)
-        // Add a marker in Sydney and move the camera
+        try {
+            val newLocation: LatLng = this.getLatLong("Ljudevita Posavskog 18, Osijek")
 
-        val address = geocoder.getFromLocationName("Osafsafssfafsa",1)
-
-        for(adress in address){
-            Log.d("LJP", adress.toString())
+            mMap.addMarker(MarkerOptions().position(newLocation).title("Marker in Sydney"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation,17.0f))
+        } catch (e: IOException){
+            e.printStackTrace()
         }
-        val sydney = LatLng(address[0].latitude, address[0].longitude)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney,17.0f))
+    }
+
+    private fun getLatLong(address: String): LatLng {
+        val geocoder = Geocoder(this)
+        val newAddress = geocoder.getFromLocationName(address, 1)
+        val latitude = newAddress[0].latitude
+        val longitude = newAddress[0].longitude
+
+        return LatLng(latitude, longitude)
     }
 }
