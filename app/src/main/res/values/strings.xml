@@ -4,4 +4,8 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="passwordConfirmation">Password Confirmation</string>
+    <string name="host">Host</string>
+    <string name="player">Player</string>
+    <string name="title_activity_tournament">Map</string>
 </resources>

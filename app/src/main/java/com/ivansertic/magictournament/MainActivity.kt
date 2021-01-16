@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.button.MaterialButton
 import com.ivansertic.magictournament.activities.Register
+import com.ivansertic.magictournament.activities.Tournament
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         val button = findViewById<MaterialButton>(R.id.goToRegister)
         button.setOnClickListener {
-            val intentRegister = Intent(this,Register::class.java)
+            val intentRegister = Intent(this,Tournament::class.java)
             startActivity(intentRegister)
         }
     }
