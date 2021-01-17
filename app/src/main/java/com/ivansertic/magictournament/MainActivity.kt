@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         val button = findViewById<MaterialButton>(R.id.goToRegister)
         button.setOnClickListener {
-            val intentRegister = Intent(this,Tournament::class.java)
+            val intentRegister = Intent(this,Register::class.java)
             startActivity(intentRegister)
         }
     }
