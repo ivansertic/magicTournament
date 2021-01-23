@@ -3,6 +3,8 @@ package com.ivansertic.magictournament.viewmodels
 import android.app.Application
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.radiobutton.MaterialRadioButton
 import com.google.android.material.textfield.TextInputEditText
@@ -14,8 +16,10 @@ import com.ivansertic.magictournament.repositories.AuthRepository
 import java.util.regex.Pattern
 
 class RegisterViewModel: ViewModel()  {
+    var status = MutableLiveData<String>()
+    private  val authRepository: AuthRepository = AuthRepository()
 
-    fun checkData(email: TextInputLayout, username:TextInputLayout, password: TextInputLayout, passwordConfirmation: TextInputLayout,userType: MaterialRadioButton,application: Register){
+    fun checkData(email: TextInputLayout, username:TextInputLayout, password: TextInputLayout, passwordConfirmation: TextInputLayout,userType: MaterialRadioButton){
 
         email.error = null
         username.error = null
@@ -45,13 +49,13 @@ class RegisterViewModel: ViewModel()  {
             }
         }
 
-        val isEmailValid: Boolean = this.validateEmail(email,application)
+        val isEmailValid: Boolean = this.validateEmail(email)
 
         if(!isEmailValid){
             return
         }
 
-        val isPasswordConfirmed: Boolean = this.checkPassword(password,passwordConfirmation,application)
+        val isPasswordConfirmed: Boolean = this.checkPassword(password,passwordConfirmation)
 
         if(!isPasswordConfirmed){
             return
@@ -63,13 +67,16 @@ class RegisterViewModel: ViewModel()  {
             UserType.PLAYER
         }
 
-        val authRepository: AuthRepository = AuthRepository()
-
-        authRepository.register(email.editText?.text.toString(),username.editText?.text.toString(),password.editText?.text.toString(), type,application)
-
+        authRepository.register(email.editText?.text.toString(),username.editText?.text.toString(),password.editText?.text.toString(), type)
+        authRepository.status.observeForever {status ->
+            status?.let {
+                authRepository.status.value = null
+                this.status.value = status
+            }
+        }
     }
 
-    private fun validateEmail(email: TextInputLayout,application: Register): Boolean{
+    private fun validateEmail(email: TextInputLayout): Boolean{
         val EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                     "\\@" +
@@ -81,16 +88,16 @@ class RegisterViewModel: ViewModel()  {
         )
 
         if(!EMAIL_ADDRESS_PATTERN.matcher(email.editText?.text.toString()).matches()){
-            Toast.makeText(application, "Please enter valid email",Toast.LENGTH_SHORT).show()
+            this.status.value = "Please enter valid email!"
             return false
         }
 
         return true
     }
 
-    private fun checkPassword(password: TextInputLayout, passwordConfirmation: TextInputLayout, application: Register):Boolean{
+    private fun checkPassword(password: TextInputLayout, passwordConfirmation: TextInputLayout):Boolean{
         if(!password.editText?.text.toString().equals(passwordConfirmation.editText?.text.toString())){
-            Toast.makeText(application,"Passwords do not match!",Toast.LENGTH_SHORT).show()
+            this.status.value = "Passwords do not match!"
             return false
         }
         return true

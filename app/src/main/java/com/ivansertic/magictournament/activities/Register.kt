@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialTextInputPicker
@@ -49,6 +50,13 @@ class Register : AppCompatActivity() {
         val passwordConfirmationET: TextInputLayout = findViewById(R.id.passwordConfirmationRegister)
         val hostRadioButton: MaterialRadioButton = findViewById(R.id.accountHost)
 
-        registerViewModel.checkData(emailEditText,usernameEditText,passwordEditText,passwordConfirmationET,hostRadioButton,this)
+        registerViewModel.checkData(emailEditText,usernameEditText,passwordEditText,passwordConfirmationET,hostRadioButton)
+        registerViewModel.status.observe(this, Observer { status ->
+            status?.let {
+                registerViewModel.status.value = null
+                Toast.makeText(this,status,Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 }
