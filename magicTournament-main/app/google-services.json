@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "7535086756",
+    "project_id": "magictournament-bd96f",
+    "storage_bucket": "magictournament-bd96f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7535086756:android:eba4da9c78511ae3fa6a31",
+        "android_client_info": {
+          "package_name": "com.ivansertic.magictournament"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7535086756-srmlfgkicpnj3oqfblutfk6podk4fpib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-Q0TzT7c-KdSmwZSpj9xbsaRTfpcY33Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7535086756-srmlfgkicpnj3oqfblutfk6podk4fpib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7535086756:android:34b1fab180031254fa6a31",
+        "android_client_info": {
+          "package_name": "com.ivansertic.magictournamentorganizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7535086756-srmlfgkicpnj3oqfblutfk6podk4fpib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-Q0TzT7c-KdSmwZSpj9xbsaRTfpcY33Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7535086756-srmlfgkicpnj3oqfblutfk6podk4fpib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
