@@ -55,8 +55,8 @@ class Register : AppCompatActivity() {
             status?.let {
                 registerViewModel.status.value = null
                 Toast.makeText(this,status,Toast.LENGTH_SHORT).show()
+                finish()
             }
         })
-
     }
 }
