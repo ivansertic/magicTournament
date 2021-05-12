@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import com.ivansertic.magictournament.activities.CreateTournament
 import com.ivansertic.magictournament.activities.Register
-import com.ivansertic.magictournament.activities.Tournament
 import com.ivansertic.magictournament.viewmodels.LoginViewModel
 import com.ivansertic.magictournament.viewmodels.RegisterViewModel
 
@@ -44,8 +44,12 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.login(emailEditText, passwordEditText)
         loginViewModel.status.observe(this, { status ->
             status?.let{
-                loginViewModel.status.value = null
-                Toast.makeText(this,status,Toast.LENGTH_SHORT).show()
+                if(status == "Successful"){
+                    startActivity(Intent(this,CreateTournament::class.java))
+                }else {
+                    loginViewModel.status.value = null
+                    Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }

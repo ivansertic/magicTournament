@@ -53,6 +53,9 @@ class AuthRepository {
         GlobalScope.launch {
             try {
                 loginUser(email, password)
+                withContext(Main) {
+                    status.value = "Successful"
+                }
             } catch (e: FirebaseAuthException) {
                 withContext(Main) {
                     status.value = "Incorrect e-mail or password!"
