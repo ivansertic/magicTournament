@@ -68,7 +68,8 @@
         android:text="@string/submit"
         app:layout_constraintTop_toBottomOf="@id/etAddress"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="@dimen/topPadding"/>
+        android:layout_marginTop="@dimen/topPadding"
+        android:layout_marginEnd="@dimen/innerRight"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
@@ -78,6 +79,7 @@
         android:text="@string/cancel"
         app:layout_constraintTop_toBottomOf="@id/etAddress"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="@dimen/topPadding"/>
+        android:layout_marginTop="@dimen/topPadding"
+        android:layout_marginStart="@dimen/innerLeft"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

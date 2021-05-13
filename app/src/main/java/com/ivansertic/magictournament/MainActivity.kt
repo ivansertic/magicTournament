@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.status.observe(this, { status ->
             status?.let{
                 if(status == "Successful"){
+                    loginViewModel.status.value = null
                     startActivity(Intent(this,CreateTournament::class.java))
                 }else {
                     loginViewModel.status.value = null
