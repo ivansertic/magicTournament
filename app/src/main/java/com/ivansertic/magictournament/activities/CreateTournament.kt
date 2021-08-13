@@ -4,10 +4,13 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
@@ -24,6 +27,7 @@ import java.io.IOException
 import javax.security.auth.callback.Callback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.card.MaterialCardView
 
 
 class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
@@ -36,6 +40,7 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         locationManager = LocationServices.getFusedLocationProviderClient(this)
         setContentView(R.layout.activity_create_tournament)
 
@@ -56,9 +61,12 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
                 mMap.addMarker(MarkerOptions().position(location))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location,17.0f))
+
+                findViewById<MaterialCardView>(R.id.cvLocation).visibility = View.VISIBLE
             }
         }
-        getMyLocation()
+
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapView) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -66,23 +74,33 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
         setOnClickListeners()
     }
 
-    private fun getMyLocation() {
-
-    }
 
     private fun setOnClickListeners() {
 
         val cancelButton: MaterialButton = findViewById(R.id.btnCancel)
         val submitButton: MaterialButton = findViewById(R.id.btnSubmit)
+        val cardViewCancel: MaterialButton = findViewById(R.id.cvCancel)
+        val cardViewAccept: MaterialButton = findViewById(R.id.cvAccept)
+        val country: TextInputLayout = findViewById(R.id.etCountry)
+        val city: TextInputLayout = findViewById(R.id.etCity)
+        val address: TextInputLayout = findViewById(R.id.etAddress)
+        val cardView: MaterialCardView = findViewById(R.id.cvLocation)
 
         cancelButton.setOnClickListener {
             this.finish()
         }
 
         submitButton.setOnClickListener {
-            val country: TextInputLayout = findViewById(R.id.etCountry)
-            val city: TextInputLayout = findViewById(R.id.etCity)
-            val address: TextInputLayout = findViewById(R.id.etAddress)
+            cardView.visibility = View.VISIBLE
+        }
+
+        cardViewCancel.setOnClickListener{
+            cancelButton.visibility = View.VISIBLE
+            submitButton.visibility = View.VISIBLE
+            country.visibility = View.VISIBLE
+            city.visibility = View.VISIBLE
+            address.visibility = View.VISIBLE
+            cardView.visibility = View.GONE
         }
     }
 
@@ -94,13 +112,6 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1

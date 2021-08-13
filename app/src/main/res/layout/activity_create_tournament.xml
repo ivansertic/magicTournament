@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/topPadding"
         android:hint="@string/country"
-        app:layout_constraintTop_toBottomOf="@+id/mapView">
+        app:layout_constraintTop_toBottomOf="@+id/mapView"
+        android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -36,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/topPadding"
         android:hint="@string/city"
-        app:layout_constraintTop_toBottomOf="@+id/etCountry">
+        app:layout_constraintTop_toBottomOf="@+id/etCountry"
+        android:visibility="gone">
         <com.google.android.material.textfield.TextInputEditText
             android:gravity="center"
             android:layout_height="match_parent"
@@ -49,7 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/topPadding"
-        app:layout_constraintTop_toBottomOf="@+id/etCity">
+        app:layout_constraintTop_toBottomOf="@+id/etCity"
+        android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -60,7 +63,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
@@ -69,7 +71,8 @@
         app:layout_constraintTop_toBottomOf="@id/etAddress"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/topPadding"
-        android:layout_marginEnd="@dimen/innerRight"/>
+        android:layout_marginEnd="@dimen/innerRight"
+        android:visibility="gone"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
@@ -80,6 +83,65 @@
         app:layout_constraintTop_toBottomOf="@id/etAddress"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="@dimen/topPadding"
-        android:layout_marginStart="@dimen/innerLeft"/>
+        android:layout_marginStart="@dimen/innerLeft"
+        android:visibility="gone"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/topPadding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="@dimen/cardViewElevation"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="parent"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:text="@string/is_this_your_location"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/topPadding">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_baseline_block_24"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_marginEnd="@dimen/bottomPopup"
+                app:strokeWidth="@dimen/strokeIconOnly"
+                >
+
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cvAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_baseline_check_circle_outline_24"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                app:strokeWidth="@dimen/strokeIconOnly">
+            </com.google.android.material.button.MaterialButton>
+        </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
