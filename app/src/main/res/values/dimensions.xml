@@ -21,4 +21,5 @@
     <dimen name="cardViewElevation">8dp</dimen>
     <dimen name="strokeIconOnly">0dp</dimen>
     <dimen name="bottomPopup">80dp</dimen>
+    <dimen name="mapViewHeight">300dp</dimen>
 </resources>

@@ -3,6 +3,8 @@ package com.ivansertic.magictournament.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.LocationManager
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
@@ -85,13 +87,15 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
         val city: TextInputLayout = findViewById(R.id.etCity)
         val address: TextInputLayout = findViewById(R.id.etAddress)
         val cardView: MaterialCardView = findViewById(R.id.cvLocation)
+        val geocoder = Geocoder(this)
+
 
         cancelButton.setOnClickListener {
             this.finish()
         }
 
         submitButton.setOnClickListener {
-            cardView.visibility = View.VISIBLE
+            reloadMapData(country, city, address, cardView, geocoder)
         }
 
         cardViewCancel.setOnClickListener{
@@ -101,8 +105,49 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
             city.visibility = View.VISIBLE
             address.visibility = View.VISIBLE
             cardView.visibility = View.GONE
+
+            val userAddress = geocoder.getFromLocation(myLatitude,myLongitude,1)
+            city.editText?.setText(userAddress[0].locality.toString())
+            country.editText?.setText(userAddress[0].countryName.toString())
+            address.editText?.setText(userAddress[0].getAddressLine(0).toString())
+
+        }
+
+        cardViewAccept.setOnClickListener {
+            startActivity(Intent(this,TournamentAdditional::class.java))
         }
     }
+
+    private fun reloadMapData(country: TextInputLayout, city:TextInputLayout, address: TextInputLayout, cardView: MaterialCardView, geocoder: Geocoder){
+
+        val countryText: String = country.editText?.text.toString()
+        val cityText: String = city.editText?.text.toString()
+        val addressText: String = address.editText?.text.toString()
+
+        if(countryText.isBlank() || cityText.isBlank() || addressText.isBlank()){
+            return
+        }
+
+        val newAddressString = "$countryText $cityText $addressText"
+
+        val newAddress = geocoder.getFromLocationName(newAddressString,1)
+
+        if(!newAddress[0].latitude.isNaN() && !newAddress[0].longitude.isNaN()){
+            if(myLatitude != newAddress[0].latitude || myLongitude != newAddress[0].longitude){
+                myLatitude = newAddress[0].latitude
+                myLongitude = newAddress[0].longitude
+
+                val location = LatLng(myLatitude,myLongitude)
+                mMap.addMarker(MarkerOptions().position(location))
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+            }
+        }
+
+        cardView.visibility = View.VISIBLE
+
+    }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
