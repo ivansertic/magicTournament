@@ -32,7 +32,7 @@
                 android:id="@+id/usernameRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
+                android:hint="@string/username"
                 app:layout_constraintTop_toBottomOf="@id/emailRegister"
                 android:layout_marginTop="@dimen/topPadding">
                 <com.google.android.material.textfield.TextInputEditText
@@ -45,11 +45,12 @@
                 android:id="@+id/passwordRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 app:layout_constraintTop_toBottomOf="@id/usernameRegister"
                 android:layout_marginTop="@dimen/topPadding">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:inputType="textPassword"
                     android:layout_height="match_parent"
                     android:gravity="center"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -64,6 +65,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPassword"
                     android:gravity="center"/>
             </com.google.android.material.textfield.TextInputLayout>
 

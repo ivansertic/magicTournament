@@ -6,4 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".activities.TournamentAdditional">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tfTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:hint="@string/tournament_title"
+        android:layout_marginTop="@dimen/topPadding"
+        android:layout_marginStart="@dimen/innerLeft"
+        android:layout_marginEnd="@dimen/rightPadding">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/menuFormat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tfTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="@dimen/innerLeft"
+        android:layout_marginTop="@dimen/topPadding"
+        android:hint="@string/format"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none">
+
+        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/menuFormatType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tfTitle"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/innerLeft"
+        android:layout_marginTop="@dimen/topPadding"
+        android:layout_marginEnd="@dimen/rightPadding"
+        android:hint="@string/format_type"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none">
+        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

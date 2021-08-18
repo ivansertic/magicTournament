@@ -28,12 +28,14 @@ import kotlinx.coroutines.tasks.await
 import java.io.IOException
 import javax.security.auth.callback.Callback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.card.MaterialCardView
 
 
 class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
+    private lateinit var mapMarker: Marker
     private lateinit var locationManager: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
@@ -60,7 +62,7 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
                 locationManager.removeLocationUpdates(this)
 
                 val location = LatLng(myLatitude,myLongitude)
-                mMap.addMarker(MarkerOptions().position(location))
+                mapMarker = mMap.addMarker(MarkerOptions().position(location))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location,17.0f))
 
@@ -138,7 +140,8 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
                 myLongitude = newAddress[0].longitude
 
                 val location = LatLng(myLatitude,myLongitude)
-                mMap.addMarker(MarkerOptions().position(location))
+                mapMarker.remove()
+                mapMarker = mMap.addMarker(MarkerOptions().position(location))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
             }

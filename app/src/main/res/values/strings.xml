@@ -14,4 +14,8 @@
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="is_this_your_location">Is this your location?</string>
+    <string name="username">Username</string>
+    <string name="tournament_title">Tournament Title</string>
+    <string name="format">Format</string>
+    <string name="format_type">Format Type</string>
 </resources>
