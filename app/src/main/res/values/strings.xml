@@ -18,4 +18,7 @@
     <string name="tournament_title">Tournament Title</string>
     <string name="format">Format</string>
     <string name="format_type">Format Type</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="tournament_description">Tournament description...</string>
 </resources>

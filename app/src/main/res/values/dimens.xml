@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="selectDateEndMargin">208dp</dimen>
+    <dimen name="timeSelectionStart">228dp</dimen>
+</resources>

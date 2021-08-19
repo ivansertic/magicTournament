@@ -5,11 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.ivansertic.magictournament.R
 import com.ivansertic.magictournament.models.enums.ConstructedTypes
 import com.ivansertic.magictournament.models.enums.LimitedTypes
 import com.ivansertic.magictournament.models.enums.TournamentFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TournamentAdditional : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +23,42 @@ class TournamentAdditional : AppCompatActivity() {
         setContentView(R.layout.activity_tournament_additional)
 
         addItemsToDropdown()
+        setOnClickListeners()
+    }
+
+    private fun setOnClickListeners() {
+        val datePickerText: TextInputEditText = findViewById(R.id.tfDate)
+        val timePickerText: TextInputEditText = findViewById(R.id.tfTime)
+
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .build()
+
+        datePickerText.setOnClickListener {
+            datePicker.show(supportFragmentManager, "tag")
+        }
+
+        val timePicker =
+            MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select Time")
+                .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val simpleDateFormat = SimpleDateFormat("dd.MM.YYYY.")
+            datePickerText.setText(simpleDateFormat.format(datePicker.selection))
+        }
+
+        timePickerText.setOnClickListener {
+            timePicker.show(supportFragmentManager, "tag");
+        }
+
+        timePicker.addOnPositiveButtonClickListener {
+            timePickerText.setText("${timePicker.hour}:${timePicker.minute}")
+        }
     }
 
     private fun addItemsToDropdown() {
