@@ -20,9 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MagicTournament">
         <activity
-            android:name=".activities.TournamentAdditional"
+            android:name=".activities.TournamentInfo"
             android:exported="true" />
-        <activity android:name=".activities.CreateTournament" />
+        <activity android:name=".activities.TournamentLocation" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

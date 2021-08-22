@@ -2,4 +2,6 @@
 <resources>
     <dimen name="selectDateEndMargin">208dp</dimen>
     <dimen name="timeSelectionStart">228dp</dimen>
+    <dimen name="infoPadding">100dp</dimen>
+    <dimen name="topPaddingInfo">30dp</dimen>
 </resources>

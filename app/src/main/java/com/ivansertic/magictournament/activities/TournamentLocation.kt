@@ -1,15 +1,13 @@
 package com.ivansertic.magictournament.activities
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Address
 import android.location.Geocoder
-import android.location.LocationManager
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
@@ -17,23 +15,17 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
-import com.google.android.gms.tasks.CancellationToken
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.ivansertic.magictournament.R
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import java.io.IOException
-import javax.security.auth.callback.Callback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.card.MaterialCardView
+import com.ivansertic.magictournament.viewmodels.TournamentLocationVM
 
 
-class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
+class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var mapMarker: Marker
     private lateinit var locationManager: FusedLocationProviderClient
@@ -41,12 +33,14 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private var myLatitude: Double = 0.0
     private var myLongitude: Double = 0.0
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var tournamentLocationVM: TournamentLocationVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         locationManager = LocationServices.getFusedLocationProviderClient(this)
-        setContentView(R.layout.activity_create_tournament)
+        setContentView(R.layout.activity_tournament_location)
 
         locationRequest = LocationRequest.create()
         locationRequest.interval =5000
@@ -70,6 +64,8 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
+        this.sharedPreferences = getSharedPreferences("Tournament", Context.MODE_PRIVATE)
+        this.tournamentLocationVM = TournamentLocationVM()
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapView) as SupportMapFragment
@@ -116,9 +112,30 @@ class CreateTournament : AppCompatActivity(), OnMapReadyCallback {
         }
 
         cardViewAccept.setOnClickListener {
-            startActivity(Intent(this,TournamentAdditional::class.java))
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+            editor.putFloat("lat",myLatitude.toFloat())
+            editor.putFloat("long",myLongitude.toFloat())
+
+            editor.apply()
+
+            createTournament(city,country,address,this.sharedPreferences)
         }
     }
+
+    private fun createTournament(city: TextInputLayout, country: TextInputLayout, address: TextInputLayout,sharedPreferences: SharedPreferences) {
+        this.tournamentLocationVM.checkData(country,city,address,sharedPreferences)
+        this.tournamentLocationVM.status.observe(this,{status -> status?.let {
+            if(!status){
+                this.tournamentLocationVM.status.value= null
+                Toast.makeText(this,"Ooop! Something went wrong!", Toast.LENGTH_LONG).show()
+            }else{
+                this.tournamentLocationVM.status.value= null
+                Toast.makeText(this,"Tournament successfully created", Toast.LENGTH_LONG).show()
+            }
+        }})
+    }
+
 
     private fun reloadMapData(country: TextInputLayout, city:TextInputLayout, address: TextInputLayout, cardView: MaterialCardView, geocoder: Geocoder){
 

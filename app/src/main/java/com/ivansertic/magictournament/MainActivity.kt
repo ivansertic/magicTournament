@@ -7,10 +7,10 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
-import com.ivansertic.magictournament.activities.CreateTournament
+import com.ivansertic.magictournament.activities.TournamentLocation
 import com.ivansertic.magictournament.activities.Register
+import com.ivansertic.magictournament.activities.TournamentInfo
 import com.ivansertic.magictournament.viewmodels.LoginViewModel
-import com.ivansertic.magictournament.viewmodels.RegisterViewModel
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             status?.let{
                 if(status == "Successful"){
                     loginViewModel.status.value = null
-                    startActivity(Intent(this,CreateTournament::class.java))
+                    startActivity(Intent(this, TournamentInfo::class.java))
                 }else {
                     loginViewModel.status.value = null
                     Toast.makeText(this, status, Toast.LENGTH_SHORT).show()

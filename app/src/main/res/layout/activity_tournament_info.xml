@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TournamentAdditional">
+    tools:context=".activities.TournamentInfo">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tfTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/innerLeft"
-        android:layout_marginTop="@dimen/topPadding"
-        android:layout_marginEnd="@dimen/rightPadding"
+        android:layout_marginStart="@dimen/infoPadding"
+        android:layout_marginTop="@dimen/topPaddingInfo"
+        android:layout_marginEnd="@dimen/infoPadding"
         android:hint="@string/tournament_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,17 +29,18 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/menuFormat"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/innerLeft"
+        android:layout_marginStart="@dimen/infoPadding"
         android:layout_marginTop="@dimen/topPadding"
+        android:layout_marginEnd="@dimen/infoPadding"
         android:hint="@string/format"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tfTitle">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="none">
 
         </com.google.android.material.textfield.MaterialAutoCompleteTextView>
@@ -48,14 +49,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/menuFormatType"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/innerLeft"
+        android:layout_marginStart="@dimen/infoPadding"
         android:layout_marginTop="@dimen/topPadding"
-        android:layout_marginEnd="@dimen/rightPadding"
+        android:layout_marginEnd="@dimen/infoPadding"
         android:hint="@string/format_type"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfTitle">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menuFormat">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:layout_width="match_parent"
@@ -69,13 +70,12 @@
         android:id="@+id/inputLayoutDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/innerLeft"
+        android:layout_marginStart="@dimen/infoPadding"
         android:layout_marginTop="@dimen/topPadding"
-        app:layout_constraintRight_toLeftOf="@id/menuFormatType"
+        app:layout_constraintTop_toBottomOf="@id/menuFormatType"
         android:hint="@string/select_date"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuFormat"
-        android:layout_marginEnd="@dimen/selectDateEndMargin">
+        android:layout_marginEnd="@dimen/infoPadding">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tfDate"
@@ -91,14 +91,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/topPadding"
-        app:layout_constraintLeft_toRightOf="@id/inputLayoutDate"
         android:hint="@string/select_time"
-        app:layout_constraintTop_toBottomOf="@+id/menuFormatType"
-        android:layout_marginEnd="@dimen/rightPadding"
-        android:layout_marginStart="@dimen/timeSelectionStart">
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutDate"
+        android:layout_marginEnd="@dimen/infoPadding"
+        android:layout_marginStart="@dimen/infoPadding">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tfTime"
@@ -106,9 +106,9 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/topPadding"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutDate"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutTime"
         android:layout_marginStart="@dimen/innerLeft"
         android:layout_marginEnd="@dimen/rightPadding">
         <androidx.appcompat.widget.AppCompatEditText
