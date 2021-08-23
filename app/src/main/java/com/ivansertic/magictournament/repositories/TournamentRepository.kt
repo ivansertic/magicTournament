@@ -1,10 +1,9 @@
 package com.ivansertic.magictournament.repositories
-
 import android.content.SharedPreferences
-import android.location.Address
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.ivansertic.magictournament.models.Tournament
 import com.ivansertic.magictournament.models.TournamentLocation
 import com.ivansertic.magictournament.models.enums.ConstructedTypes
@@ -16,6 +15,8 @@ import java.time.format.DateTimeFormatter
 class TournamentRepository {
 
     private var status: MutableLiveData<Boolean> = MutableLiveData()
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseDatabase = FirebaseFirestore.getInstance()
 
     fun createTournament(
         country: TextInputLayout,
@@ -23,6 +24,8 @@ class TournamentRepository {
         address: TextInputLayout,
         sharedPreferences: SharedPreferences
     ) {
+        val currentUser = firebaseAuth.currentUser ?: return
+
         val tournamentLocation: TournamentLocation = TournamentLocation(
             city = city.editText?.text.toString(),
             address = address.editText?.text.toString(),
@@ -30,7 +33,6 @@ class TournamentRepository {
             lat = sharedPreferences.getFloat("lat", 0.0F).toDouble(),
             long = sharedPreferences.getFloat("long", 0.0F).toDouble()
         )
-
 
 
         val tournament: Tournament = Tournament(
@@ -59,9 +61,12 @@ class TournamentRepository {
             ),
             description = sharedPreferences.getString("tournamentDescription", "default")
                 .toString(),
-            tournamentLocation = tournamentLocation
-
+            tournamentLocation = tournamentLocation,
+            creatorId = currentUser.uid
         )
+
+        firebaseDatabase.collection("tournaments").document(tournament.id).set(tournament)
+
 
     }
 }

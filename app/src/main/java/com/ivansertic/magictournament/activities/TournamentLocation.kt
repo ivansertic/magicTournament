@@ -112,6 +112,7 @@ class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
         }
 
         cardViewAccept.setOnClickListener {
+            checkInitialAddress(country, city, address, cardView, geocoder)
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
             editor.putFloat("lat",myLatitude.toFloat())
@@ -144,7 +145,7 @@ class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
         val addressText: String = address.editText?.text.toString()
 
         if(countryText.isBlank() || cityText.isBlank() || addressText.isBlank()){
-            return
+           return
         }
 
         val newAddressString = "$countryText $cityText $addressText"
@@ -166,6 +167,15 @@ class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
 
         cardView.visibility = View.VISIBLE
 
+    }
+
+    private fun checkInitialAddress(country: TextInputLayout, city:TextInputLayout, address: TextInputLayout, cardView: MaterialCardView, geocoder: Geocoder){
+        if(country.visibility == View.GONE || city.visibility == View.GONE || address.visibility == View.GONE){
+            val userAddress = geocoder.getFromLocation(myLatitude,myLongitude,1)
+            city.editText?.setText(userAddress[0].locality.toString())
+            country.editText?.setText(userAddress[0].countryName.toString())
+            address.editText?.setText(userAddress[0].getAddressLine(0).toString())
+        }
     }
 
 
