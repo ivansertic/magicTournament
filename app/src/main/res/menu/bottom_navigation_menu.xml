@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navCreate"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="@string/create_tournament" />
+    <item
+        android:id="@+id/navApplied"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="@string/applied_tournaments" />
+    <item
+        android:id="@+id/navAll"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_view_day_24"
+        android:title="@string/all_tournaments" />
+</menu>

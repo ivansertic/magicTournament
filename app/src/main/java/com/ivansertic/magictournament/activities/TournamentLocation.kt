@@ -120,11 +120,11 @@ class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
 
             editor.apply()
 
-            createTournament(city,country,address,this.sharedPreferences)
+            createTournament(city,country,address,this.sharedPreferences,cardView)
         }
     }
 
-    private fun createTournament(city: TextInputLayout, country: TextInputLayout, address: TextInputLayout,sharedPreferences: SharedPreferences) {
+    private fun createTournament(city: TextInputLayout, country: TextInputLayout, address: TextInputLayout,sharedPreferences: SharedPreferences,cardView: MaterialCardView) {
         this.tournamentLocationVM.checkData(country,city,address,sharedPreferences)
         this.tournamentLocationVM.status.observe(this,{status -> status?.let {
             if(!status){

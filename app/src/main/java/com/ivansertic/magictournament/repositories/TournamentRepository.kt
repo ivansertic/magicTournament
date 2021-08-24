@@ -1,5 +1,6 @@
 package com.ivansertic.magictournament.repositories
 import android.content.SharedPreferences
+import androidx.compose.ui.platform.AndroidUiDispatcher.Companion.Main
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -9,12 +10,17 @@ import com.ivansertic.magictournament.models.TournamentLocation
 import com.ivansertic.magictournament.models.enums.ConstructedTypes
 import com.ivansertic.magictournament.models.enums.LimitedTypes
 import com.ivansertic.magictournament.models.enums.TournamentFormat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TournamentRepository {
 
-    private var status: MutableLiveData<Boolean> = MutableLiveData()
+    var status: MutableLiveData<Boolean> = MutableLiveData()
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseDatabase = FirebaseFirestore.getInstance()
 
@@ -65,7 +71,14 @@ class TournamentRepository {
             creatorId = currentUser.uid
         )
 
-        firebaseDatabase.collection("tournaments").document(tournament.id).set(tournament)
+        GlobalScope.launch(Dispatchers.IO) {
+            firebaseDatabase.collection("tournaments").document(tournament.id).set(tournament)
+                .await()
+
+            withContext(Main){
+                status.value = true
+            }
+        }
 
 
     }

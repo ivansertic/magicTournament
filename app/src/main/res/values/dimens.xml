@@ -4,4 +4,6 @@
     <dimen name="timeSelectionStart">228dp</dimen>
     <dimen name="infoPadding">100dp</dimen>
     <dimen name="topPaddingInfo">30dp</dimen>
+    <dimen name="title_size">22sp</dimen>
+    <dimen name="body_text_site">18sp</dimen>
 </resources>

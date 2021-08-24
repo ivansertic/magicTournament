@@ -21,4 +21,12 @@
     <string name="select_date">Select Date</string>
     <string name="select_time">Select Time</string>
     <string name="tournament_description">Tournament description...</string>
+    <string name="create_tournament">Create Tournament</string>
+    <string name="applied_tournaments">Applied Tournaments</string>
+    <string name="all_tournaments">All Tournaments</string>
+    <string name="tournament_title_place_holder">Tournament Title</string>
+    <string name="format_place_holder">Format</string>
+    <string name="type_place_holder">Type</string>
+    <string name="description_place_holder">This is dummy description</string>
+    <string name="apply">Apply</string>
 </resources>

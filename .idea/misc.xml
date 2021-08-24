@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1890625" />
+        <entry key="app/src/main/res/drawable/border.xml" value="0.34322916666666664" />
         <entry key="app/src/main/res/layout/activity_create_tournament.xml" value="0.39759036144578314" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/activity_tournament_additional.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/activity_tournament_list.xml" value="0.322463768115942" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/rcycler_view_item.xml" value="0.322463768115942" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3229166666666667" />
       </map>
     </option>
   </component>

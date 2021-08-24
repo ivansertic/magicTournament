@@ -10,6 +10,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ivansertic.magictournament.activities.TournamentLocation
 import com.ivansertic.magictournament.activities.Register
 import com.ivansertic.magictournament.activities.TournamentInfo
+import com.ivansertic.magictournament.activities.TournamentList
 import com.ivansertic.magictournament.viewmodels.LoginViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             status?.let{
                 if(status == "Successful"){
                     loginViewModel.status.value = null
-                    startActivity(Intent(this, TournamentInfo::class.java))
+                    startActivity(Intent(this, TournamentList::class.java))
                 }else {
                     loginViewModel.status.value = null
                     Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
