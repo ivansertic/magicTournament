@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="@string/format_place_holder"
+                        android:text="@string/country_place_holder"
                         android:textSize="@dimen/body_text_site">
 
                     </com.google.android.material.textview.MaterialTextView>
@@ -83,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="@string/type_place_holder"
+                        android:text="@string/city_place_holder"
                         android:textSize="@dimen/body_text_site">
 
                     </com.google.android.material.textview.MaterialTextView>
@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="01.01.2020. 18:30"
+                        android:text="@string/address_place_holder"
                         android:textSize="@dimen/body_text_site">
 
                     </com.google.android.material.textview.MaterialTextView>
@@ -116,16 +116,25 @@
                 </com.google.android.material.textview.MaterialTextView>
             </LinearLayout>
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:padding="16dp">
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/itemShowMap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
                     android:gravity="center"
+                    android:layout_gravity="start"
+                    android:text="@string/open_map">
+
+                </com.google.android.material.button.MaterialButton>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/itemApply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/alignRightLinear"
                     android:text="@string/apply">
                 </com.google.android.material.button.MaterialButton>
             </LinearLayout>

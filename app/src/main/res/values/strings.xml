@@ -29,4 +29,9 @@
     <string name="type_place_holder">Type</string>
     <string name="description_place_holder">This is dummy description</string>
     <string name="apply">Apply</string>
+    <string name="country_place_holder">Country</string>
+    <string name="city_place_holder">City</string>
+    <string name="address_place_holder">Address</string>
+    <string name="open_map">Open Map</string>
+    <string name="close_popup">Close</string>
 </resources>
