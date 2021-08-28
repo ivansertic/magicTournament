@@ -1,6 +1,7 @@
 package com.ivansertic.magictournament.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -132,6 +133,11 @@ class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
             }else{
                 this.tournamentLocationVM.status.value= null
                 Toast.makeText(this,"Tournament successfully created", Toast.LENGTH_LONG).show()
+
+                val intent = Intent()
+                intent.putExtra("close",true)
+                setResult(Activity.RESULT_OK,intent)
+                finish()
             }
         }})
     }

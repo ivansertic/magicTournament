@@ -1,5 +1,6 @@
 package com.ivansertic.magictournament.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -38,6 +39,11 @@ class TournamentInfo : AppCompatActivity() {
     private lateinit var cancelButton: MaterialButton
     private lateinit var submitButton: MaterialButton
     private lateinit var sharedPreferences: SharedPreferences
+    companion object {
+        const val ACTIVITY_CONSTANT= 1
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,13 +128,12 @@ class TournamentInfo : AppCompatActivity() {
 
                         editor.apply()
 
-                        startActivity(Intent(this, TournamentLocation::class.java))
+                        val intent = Intent(this, TournamentLocation::class.java)
+                        startActivityForResult(intent,ACTIVITY_CONSTANT)
                     }
                 }
             })
         }
-
-
     }
 
     private fun addItemsToDropdown() {
@@ -178,6 +183,17 @@ class TournamentInfo : AppCompatActivity() {
                     )
                 )
                 formatTypes?.setText(ConstructedTypes.MODERN.toString(), false)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ACTIVITY_CONSTANT) {
+            if (resultCode == Activity.RESULT_OK) {
+                if(data?.extras?.getBoolean("close") == true) {
+                    finish()
+                }
             }
         }
     }

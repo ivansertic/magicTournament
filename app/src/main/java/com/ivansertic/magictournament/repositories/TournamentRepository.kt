@@ -10,6 +10,7 @@ import com.ivansertic.magictournament.models.TournamentLocation
 import com.ivansertic.magictournament.models.enums.ConstructedTypes
 import com.ivansertic.magictournament.models.enums.LimitedTypes
 import com.ivansertic.magictournament.models.enums.TournamentFormat
+import com.ivansertic.magictournament.utils.TournamentDocumentToObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -81,5 +82,16 @@ class TournamentRepository {
         }
 
 
+    }
+
+    suspend fun getFirebaseTournaments(): ArrayList<Tournament>{
+        val tournamentsList = ArrayList<Tournament>()
+
+        val firebaseTournaments = firebaseDatabase.collection("tournaments").get().await()
+
+        for(document in firebaseTournaments){
+            tournamentsList.add(TournamentDocumentToObject.convertDocumentToObject(document.data))
+        }
+        return tournamentsList
     }
 }
