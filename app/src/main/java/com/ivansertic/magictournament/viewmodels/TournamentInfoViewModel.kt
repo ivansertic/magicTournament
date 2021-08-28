@@ -1,25 +1,31 @@
 package com.ivansertic.magictournament.viewmodels
 
+import android.app.Application
 import android.util.Log
 import android.widget.EditText
 import androidx.compose.ui.platform.AndroidUiDispatcher.Companion.Main
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ivansertic.magictournament.models.Tournament
+import com.ivansertic.magictournament.models.room.UserTournament
+import com.ivansertic.magictournament.models.room.UserTournamentDao
+import com.ivansertic.magictournament.models.room.UserTournamentDatabase
 import com.ivansertic.magictournament.repositories.TournamentRepository
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class TournamentInfoViewModel : ViewModel() {
+class TournamentInfoViewModel(application: Application) : AndroidViewModel(application) {
 
     var status: MutableLiveData<Any> = MutableLiveData()
     var dataCheck: Boolean = false
     private val tournamentRepository = TournamentRepository()
     val tournamentList = MutableLiveData<ArrayList<Tournament>>()
+    private val userTournamentDao = UserTournamentDatabase.getDatabase(application).userTournamentDao()
 
     fun checkData(title: TextInputLayout, description: TextInputLayout) {
         title.error = null
@@ -84,6 +90,12 @@ class TournamentInfoViewModel : ViewModel() {
             withContext(Main){
                 tournamentList.value = tournaments
             }
+        }
+    }
+
+    fun applyToTournament(userTournament: UserTournament){
+        GlobalScope.launch(Dispatchers.IO) {
+            tournamentRepository.applyUserToTournament(userTournament, userTournamentDao)
         }
     }
 }
