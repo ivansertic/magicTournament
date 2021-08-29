@@ -59,6 +59,7 @@ class TournamentLocation : AppCompatActivity(), OnMapReadyCallback {
                 val location = LatLng(myLatitude,myLongitude)
                 mapMarker = mMap.addMarker(MarkerOptions().position(location))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
 
                 findViewById<MaterialCardView>(R.id.cvLocation).visibility = View.VISIBLE
             }

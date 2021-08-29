@@ -11,6 +11,11 @@
         android:icon="@drawable/ic_baseline_favorite_border_24"
         android:title="@string/applied_tournaments" />
     <item
+        android:id="@+id/navCreated"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_playlist_add_check_24"
+        android:title="@string/created_tournaments" />
+    <item
         android:id="@+id/navCreate"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_playlist_add_24"

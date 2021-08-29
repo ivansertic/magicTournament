@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ivansertic.magictournament.models.enums.UserType
+import com.ivansertic.magictournament.models.objects.UserObject
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -53,6 +54,7 @@ class AuthRepository {
         GlobalScope.launch {
             try {
                 loginUser(email, password)
+                createUserObject()
                 withContext(Main) {
                     status.value = "Successful"
                 }
@@ -80,6 +82,16 @@ class AuthRepository {
 
     private suspend fun loginUser(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).await()
+    }
+
+    private suspend fun createUserObject(){
+
+        val currentUserId = firebaseAuth.currentUser?.uid ?: return
+
+        val currentUserDocument = firebaseDatabase.collection("users").document(currentUserId).get().await()
+
+        UserObject.createObject(currentUserDocument["type"] as String)
+
     }
 
 }

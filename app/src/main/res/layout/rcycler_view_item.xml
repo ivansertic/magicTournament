@@ -144,6 +144,14 @@
                     android:layout_marginLeft="@dimen/alignRightLinear"
                     android:text="@string/apply">
                 </com.google.android.material.button.MaterialButton>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/itemDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/alignRightDetails"
+                    android:text="@string/details">
+                </com.google.android.material.button.MaterialButton>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

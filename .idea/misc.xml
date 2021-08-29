@@ -10,9 +10,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/activity_tournament_additional.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/activity_tournament_details.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/layout/activity_tournament_info.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_tournament_list.xml" value="0.322463768115942" />
         <entry key="app/src/main/res/layout/activity_tournament_location.xml" value="0.2554347826086957" />
-        <entry key="app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.176" />
         <entry key="app/src/main/res/layout/popup_map.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/rcycler_view_item.xml" value="0.322463768115942" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3229166666666667" />

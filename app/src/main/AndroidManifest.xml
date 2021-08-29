@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MagicTournament">
         <activity
+            android:name=".activities.TournamentDetails"
+            android:exported="true" />
+        <activity
             android:name=".activities.TournamentList"
             android:exported="true" />
         <activity

@@ -86,7 +86,7 @@ class TournamentInfoViewModel(application: Application) : AndroidViewModel(appli
 
     fun fetchTournaments() {
         GlobalScope.launch(Dispatchers.IO) {
-            val tournaments = tournamentRepository.getFirebaseTournaments()
+            val tournaments = tournamentRepository.getFirebaseTournaments(userTournamentDao)
             withContext(Main){
                 tournamentList.value = tournaments
             }
@@ -97,5 +97,27 @@ class TournamentInfoViewModel(application: Application) : AndroidViewModel(appli
         GlobalScope.launch(Dispatchers.IO) {
             tournamentRepository.applyUserToTournament(userTournament, userTournamentDao)
         }
+    }
+
+    fun getMyTournaments(){
+        GlobalScope.launch(Dispatchers.IO){
+            val tournaments = tournamentRepository.getMyTournaments(userTournamentDao)
+            withContext(Main){
+                tournamentList.value = tournaments
+            }
+        }
+    }
+
+    fun getMyCreatedTournaments() {
+        GlobalScope.launch(Dispatchers.IO){
+            val tournaments = tournamentRepository.getMyCreatedTournaments()
+            withContext(Main){
+                tournamentList.value = tournaments
+            }
+        }
+    }
+
+    fun checkOwner(tournament: Tournament): Boolean{
+        return tournamentRepository.checkOwner(tournament)
     }
 }

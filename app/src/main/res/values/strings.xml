@@ -34,4 +34,12 @@
     <string name="address_place_holder">Address</string>
     <string name="open_map">Open Map</string>
     <string name="close_popup">Close</string>
+    <string name="details">Details</string>
+    <string name="created_tournaments">Created Tournaments</string>
+    <string name="detailTitle">Title</string>
+    <string name="start">Start</string>
+    <string name="type">Type</string>
+    <string name="round_one">Round One</string>
+    <string name="round_two">Round Two</string>
+    <string name="round_three">Round Three</string>
 </resources>

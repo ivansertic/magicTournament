@@ -90,7 +90,7 @@ class TournamentRepository {
 
     }
 
-    suspend fun getFirebaseTournaments(): ArrayList<Tournament> {
+    suspend fun getFirebaseTournaments(userTournamentDao: UserTournamentDao): ArrayList<Tournament> {
         val tournamentsList = ArrayList<Tournament>()
 
         val firebaseTournaments = firebaseDatabase.collection("tournaments").get().await()
@@ -98,6 +98,14 @@ class TournamentRepository {
         for (document in firebaseTournaments) {
             tournamentsList.add(TournamentDocumentToObject.convertDocumentToObject(document.data))
         }
+
+        val currentUser = firebaseAuth.currentUser
+
+        val tournamentIds = userTournamentDao.getAllAlreadyApplied(
+            currentUser?.uid ?: ""
+        )
+
+        tournamentsList.removeAll{ tournament -> tournament.id in tournamentIds }
         return tournamentsList
     }
 
@@ -109,7 +117,12 @@ class TournamentRepository {
         val currentUser = firebaseAuth.currentUser ?: return
         userTournament.userId = currentUser.uid
 
-        userTournamentDao.insertData(userTournament)
+        val check: UserTournament? = userTournamentDao.getAlreadyApplied(userTournament.userId, userTournament.tournamentId)
+
+        if (check == null) {
+            userTournamentDao.insertData(userTournament)
+        }
+
 
         val userIds = ArrayList<String>()
         userIds.add(userTournament.userId)
@@ -117,16 +130,21 @@ class TournamentRepository {
         try {
             val userTournamentFB = firebaseDatabase.collection("tournament_users").whereEqualTo("tournamentId",userTournament.tournamentId).limit(1).get().await()
 
-            var userTrnmObj: UserTournamentFB =  UserTournamentFB(tournamentId = userTournament.tournamentId,userIds)
+            var userTrnmObj =  UserTournamentFB(tournamentId = userTournament.tournamentId,userIds)
             if (userTournamentFB.documents.isNotEmpty()){
+                var writeToFB = false
                 for(document in userTournamentFB){
                     val userIds = document.data["userIds"] as ArrayList<String>
                     if(!userIds.contains(userTournament.userId)) {
                         userTrnmObj.userIds.addAll(document.data["userIds"] as ArrayList<String>)
+                        writeToFB = true
                     }
                 }
 
-                firebaseDatabase.collection("tournament_users").document(userTournamentFB.documents[0].id).set(userTrnmObj).await()
+                if(writeToFB) {
+                    firebaseDatabase.collection("tournament_users")
+                        .document(userTournamentFB.documents[0].id).set(userTrnmObj).await()
+                }
             }else{
 
                 firebaseDatabase.collection("tournament_users").document().set(userTrnmObj).await()
@@ -134,7 +152,42 @@ class TournamentRepository {
         }catch (e: FirebaseFirestoreException){
         }
 
+    }
 
+    suspend fun getMyTournaments(userTournamentDao: UserTournamentDao): ArrayList<Tournament> {
+        val myTournamentsList = ArrayList<Tournament>()
 
+        val firebaseTournaments = firebaseDatabase.collection("tournaments").get().await()
+
+        for (document in firebaseTournaments) {
+            myTournamentsList.add(TournamentDocumentToObject.convertDocumentToObject(document.data))
+        }
+
+        val currentUser = firebaseAuth.currentUser
+
+        val tournamentIds = userTournamentDao.getAllAlreadyApplied(
+            currentUser?.uid ?: ""
+        )
+
+        myTournamentsList.removeAll{tournament -> tournament.id !in tournamentIds }
+        return myTournamentsList
+    }
+
+    suspend fun getMyCreatedTournaments(): ArrayList<Tournament> {
+        val myTournamentsList = ArrayList<Tournament>()
+        val currentUser = firebaseAuth.currentUser
+
+        val firebaseTournaments = firebaseDatabase.collection("tournaments").whereEqualTo("creatorId",currentUser?.uid).get().await()
+
+        for (document in firebaseTournaments) {
+            myTournamentsList.add(TournamentDocumentToObject.convertDocumentToObject(document.data))
+        }
+
+        return myTournamentsList
+
+    }
+
+    fun checkOwner(tournament: Tournament): Boolean {
+        return firebaseAuth.currentUser?.uid == tournament.creatorId
     }
 }
