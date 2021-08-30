@@ -87,6 +87,7 @@ class TournamentList : AppCompatActivity() {
                 editor.putString("type",tournament.type.toString())
                 editor.putString("subType",tournament.subType.toString())
                 editor.putString("tournamentId",tournament.id)
+                editor.putBoolean("isFinished",tournament.isFinished)
                 editor.apply()
 
                 startActivity(Intent(context,TournamentDetails::class.java))

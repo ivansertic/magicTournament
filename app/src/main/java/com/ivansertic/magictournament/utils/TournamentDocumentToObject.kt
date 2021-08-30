@@ -43,7 +43,8 @@ object TournamentDocumentToObject {
             ),
             description = data["description"].toString(),
             tournamentLocation = tournamentLocation,
-            creatorId = data["creatorId"].toString()
+            creatorId = data["creatorId"].toString(),
+            isFinished = data["isFinished"] as Boolean
         )
     }
 }

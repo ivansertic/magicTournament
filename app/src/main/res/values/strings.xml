@@ -42,4 +42,5 @@
     <string name="round_one">Round One</string>
     <string name="round_two">Round Two</string>
     <string name="round_three">Round Three</string>
+    <string name="finish">Finish</string>
 </resources>

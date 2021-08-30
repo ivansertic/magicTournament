@@ -119,4 +119,18 @@
 
     </com.google.android.material.button.MaterialButton>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/detailsFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finish"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="@dimen/innerLeft"
+        android:layout_marginBottom="@dimen/topPadding"
+        >
+
+    </com.google.android.material.button.MaterialButton>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

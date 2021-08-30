@@ -75,7 +75,8 @@ class TournamentRepository {
             description = sharedPreferences.getString("tournamentDescription", "default")
                 .toString(),
             tournamentLocation = tournamentLocation,
-            creatorId = currentUser.uid
+            creatorId = currentUser.uid,
+            isFinished = false
         )
 
         GlobalScope.launch(Dispatchers.IO) {

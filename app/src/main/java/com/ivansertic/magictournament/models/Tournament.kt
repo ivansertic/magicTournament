@@ -1,5 +1,6 @@
 package com.ivansertic.magictournament.models
 
+import com.google.firebase.firestore.PropertyName
 import com.ivansertic.magictournament.models.enums.ConstructedTypes
 import com.ivansertic.magictournament.models.enums.TournamentFormat
 import java.time.LocalDateTime
@@ -13,5 +14,7 @@ data class Tournament(
     var tournamentDateTime: LocalDateTime = LocalDateTime.now(),
     var description: String = "",
     var tournamentLocation: TournamentLocation = TournamentLocation(),
-    var creatorId: String = ""
+    var creatorId: String = "",
+    @JvmField @PropertyName("isFinished")
+    var isFinished: Boolean = false
 )
