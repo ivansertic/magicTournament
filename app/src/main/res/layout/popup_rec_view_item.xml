@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginStart="@dimen/dp_margin_10"
+    android:layout_marginBottom="@dimen/dp_margin_20">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/playerOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/player_one_placeholder"
+            android:clickable="false"
+            android:gravity="center"
+            android:lines="2"
+            android:cursorVisible="false"
+            android:focusable="false">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/playerOneScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_0"
+            android:gravity="center"
+            android:inputType="number"
+            android:layout_marginStart="@dimen/dp_margin_10"
+            android:maxLength="1"
+            android:digits="012">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/playerTwoScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_0"
+            android:gravity="center"
+            android:inputType="number"
+            android:layout_marginStart="@dimen/dp_margin_10"
+            android:maxLength="1"
+            android:digits="012">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/playerTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/player_two_place_holder"
+            android:layout_marginStart="@dimen/dp_margin_10"
+            android:clickable="false"
+            android:gravity="center"
+            android:lines="2"
+            android:cursorVisible="false"
+            android:focusable="false">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.ivansertic.magictournament.R
+import com.ivansertic.magictournament.ResultsDialog
 import com.ivansertic.magictournament.models.TournamentRound
 import com.ivansertic.magictournament.models.User
 import com.ivansertic.magictournament.models.UserPair
@@ -33,6 +34,7 @@ class TournamentDetails : AppCompatActivity() {
     private var users: ArrayList<User> = ArrayList()
     private lateinit var tournamentId: String
     private var rounds: ArrayList<TournamentRound> = ArrayList()
+    private lateinit var resultDialog: ResultsDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,8 @@ class TournamentDetails : AppCompatActivity() {
         }
 
         tournamentDetailsVM = ViewModelProvider(this).get(TournamentDetailsViewModel::class.java)
+
+        resultDialog = ResultsDialog()
 
         addData()
         getContestants()
@@ -132,6 +136,10 @@ class TournamentDetails : AppCompatActivity() {
 
         cancelButton.setOnClickListener {
             finish()
+        }
+
+        roundOneButton.setOnClickListener {
+            resultDialog.show(supportFragmentManager,"")
         }
     }
 

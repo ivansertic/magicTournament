@@ -8,4 +8,8 @@
     <dimen name="body_text_site">18sp</dimen>
     <dimen name="alignRightLinear">180dp</dimen>
     <dimen name="alignRightDetails">170dp</dimen>
+    <dimen name="recViewFromBtn">50dp</dimen>
+    <dimen name="dp_margin_20">20dp</dimen>
+    <dimen name="middle_margin">36dp</dimen>
+    <dimen name="dp_margin_10">10dp</dimen>
 </resources>
