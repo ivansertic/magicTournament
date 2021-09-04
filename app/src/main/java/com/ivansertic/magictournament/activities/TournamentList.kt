@@ -58,6 +58,7 @@ class TournamentList : AppCompatActivity() {
 
 
         mapDialog = MapPopup()
+        mapDialog.isCancelable = false
 
         fetchTournamentData()
 

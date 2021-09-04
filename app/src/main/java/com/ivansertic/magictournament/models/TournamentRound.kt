@@ -7,6 +7,6 @@ import kotlin.collections.HashMap
 data class TournamentRound(
     val id: String = UUID.randomUUID().toString(),
     val tournamentId: String,
-    val pairs: HashMap<String,ArrayList<UserPair>>,
+    var pairs: HashMap<String,ArrayList<UserPair>>,
     val roundNumber: Int
 )

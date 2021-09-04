@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.ivansertic.magictournament.R
+import com.ivansertic.magictournament.models.TournamentRound
 import com.ivansertic.magictournament.models.User
 import com.ivansertic.magictournament.models.UserPair
 import com.ivansertic.magictournament.viewmodels.TournamentDetailsViewModel
@@ -28,8 +30,9 @@ class TournamentDetails : AppCompatActivity() {
     private lateinit var type: TextInputLayout
     private lateinit var format: TextInputLayout
     private lateinit var tournamentDetailsVM: TournamentDetailsViewModel
-    private lateinit var users: ArrayList<User>
-    private var pairs: HashMap<String,ArrayList<UserPair>> = HashMap()
+    private var users: ArrayList<User> = ArrayList()
+    private lateinit var tournamentId: String
+    private var rounds: ArrayList<TournamentRound> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +49,9 @@ class TournamentDetails : AppCompatActivity() {
         format = findViewById(R.id.detailsFormat)
 
         sharedPreferences = getSharedPreferences("Owner", Context.MODE_PRIVATE)
+        tournamentId = sharedPreferences.getString("tournamentId", "")!!
 
-        if(!sharedPreferences.getBoolean("isOwner",false)){
+        if (!sharedPreferences.getBoolean("isOwner", false)) {
             startButton.visibility = View.GONE
         }
 
@@ -55,9 +59,53 @@ class TournamentDetails : AppCompatActivity() {
 
         addData()
         getContestants()
+        getRounds()
         setOnClickListeners()
 
-        tournamentDetailsVM.getRounds(sharedPreferences.getString("tournamentId","")!!)
+
+    }
+
+    private fun getRounds() {
+        tournamentDetailsVM.getRounds(tournamentId)
+        tournamentDetailsVM.rounds.observe(this, { rounds ->
+            rounds?.let {
+                this.rounds = rounds
+                this.rounds.sortBy { round -> round.roundNumber }
+                when (this.rounds.size) {
+                    1 -> {
+                        roundOneButton.visibility = View.VISIBLE
+                    }
+                    2 -> {
+                        roundOneButton.visibility = View.VISIBLE
+                        roundTwoButton.visibility = View.VISIBLE
+                    }
+                    3 -> {
+                        roundOneButton.visibility = View.VISIBLE
+                        roundTwoButton.visibility = View.VISIBLE
+                        roundThreeButton.visibility = View.VISIBLE
+                    }
+                }
+
+                checkForEnd()
+            }
+        })
+    }
+
+    private fun checkForEnd() {
+        if(!sharedPreferences.getBoolean("isOwner", false)){
+            return
+        }
+
+        if (users.size in 1..4  && roundOneButton.visibility != View.GONE) {
+            startButton.visibility = View.GONE
+            finishButton.visibility = View.VISIBLE
+        } else if (users.size in 5..6 && roundTwoButton.visibility != View.GONE) {
+            startButton.visibility = View.GONE
+            finishButton.visibility = View.VISIBLE
+        } else if (users.size > 6 && roundThreeButton.visibility != View.GONE) {
+            startButton.visibility = View.GONE
+            finishButton.visibility = View.VISIBLE
+        }
     }
 
     private fun setOnClickListeners() {
@@ -74,7 +122,12 @@ class TournamentDetails : AppCompatActivity() {
                 }
             }
 
-            createPairs(users,roundNumber)
+            if (roundNumber == 1) {
+                createPairs(users, roundNumber)
+            } else {
+                changePairs(roundNumber)
+            }
+
         }
 
         cancelButton.setOnClickListener {
@@ -82,20 +135,40 @@ class TournamentDetails : AppCompatActivity() {
         }
     }
 
-    private fun getContestants() {
-        tournamentDetailsVM.getContestants(sharedPreferences.getString("tournamentId","")!!)
-        tournamentDetailsVM.users.observe(this,{users -> users?.let {
-            this.users = users
-        }})
+    private fun changePairs(roundNumber: Int) {
+        tournamentDetailsVM.changePairs(
+            rounds.find { round -> round.roundNumber == roundNumber - 1 }!!,
+            roundNumber,
+            tournamentId
+        )
+
+        this.getRounds()
+
+
     }
 
-    private fun createPairs(users: ArrayList<User>,roundNumber:Int) {
-        pairs = tournamentDetailsVM.createPairs(users,sharedPreferences.getString("tournamentId","")!!,roundNumber)
+    private fun getContestants() {
+        tournamentDetailsVM.getContestants(tournamentId)
+        tournamentDetailsVM.users.observe(this, { users ->
+            users?.let {
+                this.users = users
+                checkForEnd()
+            }
+        })
+    }
+
+    private fun createPairs(users: ArrayList<User>, roundNumber: Int) {
+        if (users.size < 4) {
+            Toast.makeText(this, "Too Few Contestants", Toast.LENGTH_LONG).show()
+            return
+        }
+        tournamentDetailsVM.createPairs(users, tournamentId, roundNumber)
+        this.getRounds()
     }
 
     private fun addData() {
-        title.editText?.setText(sharedPreferences.getString("title",""))
-        type.editText?.setText(sharedPreferences.getString("type",""))
-        format.editText?.setText(sharedPreferences.getString("subType",""))
+        title.editText?.setText(sharedPreferences.getString("title", ""))
+        type.editText?.setText(sharedPreferences.getString("type", ""))
+        format.editText?.setText(sharedPreferences.getString("subType", ""))
     }
 }

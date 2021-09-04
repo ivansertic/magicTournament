@@ -50,7 +50,7 @@ class TournamentDetailsRepo {
 
     }
 
-    suspend fun getRounds(tournamentId: String){
+    suspend fun getRounds(tournamentId: String): ArrayList<TournamentRound>{
 
         val roundDocuments = firebaseDatabase.collection("tournament_rounds").whereEqualTo("tournamentId",tournamentId).get().await()
 
@@ -78,6 +78,6 @@ class TournamentDetailsRepo {
             ))
         }
 
-        Log.d("Test",tournamentRounds.toString())
+        return tournamentRounds
     }
 }

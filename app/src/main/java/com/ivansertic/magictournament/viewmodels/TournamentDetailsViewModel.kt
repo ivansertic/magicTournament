@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.ui.platform.AndroidUiDispatcher.Companion.Main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ivansertic.magictournament.models.TournamentRound
 import com.ivansertic.magictournament.models.User
 import com.ivansertic.magictournament.models.UserPair
 import com.ivansertic.magictournament.repositories.TournamentDetailsRepo
@@ -15,6 +16,7 @@ import kotlinx.coroutines.withContext
 class TournamentDetailsViewModel: ViewModel() {
 
     var users: MutableLiveData<ArrayList<User>> = MutableLiveData()
+    var rounds: MutableLiveData<ArrayList<TournamentRound>> = MutableLiveData()
     private val detailsRepository = TournamentDetailsRepo()
 
     fun getContestants(tournamentId: String){
@@ -27,7 +29,7 @@ class TournamentDetailsViewModel: ViewModel() {
         }
     }
 
-    fun createPairs(users: ArrayList<User>, tournamentId: String,roundNumber:Int): HashMap<String,ArrayList<UserPair>> {
+    fun createPairs(users: ArrayList<User>, tournamentId: String,roundNumber:Int) {
 
         users.shuffle()
         val pairs: HashMap<String,ArrayList<UserPair>> = HashMap()
@@ -46,13 +48,39 @@ class TournamentDetailsViewModel: ViewModel() {
         GlobalScope.launch(Dispatchers.IO){
             detailsRepository.addTournamentPairs(pairs,tournamentId,roundNumber)
         }
-
-        return pairs
     }
 
     fun getRounds(tournamentId: String) {
         GlobalScope.launch(Dispatchers.IO){
-            detailsRepository.getRounds(tournamentId)
+            val roundsFB = detailsRepository.getRounds(tournamentId)
+            withContext(Main) {
+                rounds.value = roundsFB
+            }
         }
+    }
+
+    fun changePairs(tournamentRound: TournamentRound,roundNumber: Int,tournamentId: String){
+
+        Log.d("Test", tournamentRound.toString())
+
+        val userPairs: ArrayList<UserPair> = ArrayList()
+        for(i in 1..tournamentRound.pairs.size){
+            userPairs.add(tournamentRound.pairs["pair${i}"]!![1])
+        }
+
+        for(i in 1..tournamentRound.pairs.size){
+
+            if( i == 1){
+                tournamentRound.pairs["pair${i}"]!![1] = userPairs[tournamentRound.pairs.size - 1]
+            }else{
+                tournamentRound.pairs["pair${i}"]!![1] = userPairs[i-2]
+            }
+
+        }
+
+        GlobalScope.launch(Dispatchers.IO){
+            detailsRepository.addTournamentPairs(tournamentRound.pairs,tournamentId,roundNumber)
+        }
+
     }
 }
