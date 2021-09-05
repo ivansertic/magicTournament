@@ -22,6 +22,7 @@ import kotlin.math.round
 
 class TournamentDetails : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var winnerText: TextInputLayout
     private lateinit var startButton: MaterialButton
     private lateinit var cancelButton: MaterialButton
     private lateinit var roundOneButton: MaterialButton
@@ -37,6 +38,7 @@ class TournamentDetails : AppCompatActivity() {
     private var rounds: ArrayList<TournamentRound> = ArrayList()
     private lateinit var resultDialog: ResultsDialog
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tournament_details)
@@ -50,6 +52,7 @@ class TournamentDetails : AppCompatActivity() {
         title = findViewById(R.id.detailsTitle)
         type = findViewById(R.id.detailsType)
         format = findViewById(R.id.detailsFormat)
+        winnerText = findViewById(R.id.winner)
 
         sharedPreferences = getSharedPreferences("Owner", Context.MODE_PRIVATE)
         tournamentId = sharedPreferences.getString("tournamentId", "")!!
@@ -104,7 +107,7 @@ class TournamentDetails : AppCompatActivity() {
         if(sharedPreferences.getBoolean("isFinished",false)){
             finishButton.visibility = View.GONE
             startButton.visibility = View.GONE
-
+            declareWinner()
             return
         }
 
@@ -170,6 +173,7 @@ class TournamentDetails : AppCompatActivity() {
             finishButton.visibility = View.GONE
 
             tournamentDetailsVM.finishTournament(tournamentId)
+            declareWinner()
         }
     }
 
@@ -208,5 +212,10 @@ class TournamentDetails : AppCompatActivity() {
         title.editText?.setText(sharedPreferences.getString("title", ""))
         type.editText?.setText(sharedPreferences.getString("type", ""))
         format.editText?.setText(sharedPreferences.getString("subType", ""))
+    }
+
+    private fun declareWinner(){
+        winnerText.editText?.setText(tournamentDetailsVM.declareWinner(rounds,users))
+        winnerText.visibility = View.VISIBLE
     }
 }

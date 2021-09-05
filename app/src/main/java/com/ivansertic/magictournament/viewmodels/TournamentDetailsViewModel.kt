@@ -65,6 +65,8 @@ class TournamentDetailsViewModel: ViewModel() {
 
         val userPairs: ArrayList<UserPair> = ArrayList()
         for(i in 1..tournamentRound.pairs.size){
+            tournamentRound.pairs["pair${i}"]!![0].score = 0
+            tournamentRound.pairs["pair${i}"]!![1].score = 0
             userPairs.add(tournamentRound.pairs["pair${i}"]!![1])
         }
 
@@ -88,5 +90,36 @@ class TournamentDetailsViewModel: ViewModel() {
         GlobalScope.launch(Dispatchers.IO){
             detailsRepository.finishTournament(tournamentId)
         }
+    }
+
+    fun declareWinner(rounds: ArrayList<TournamentRound>, users: ArrayList<User>): String {
+
+        val finalResults: ArrayList<UserPair> = ArrayList()
+
+        for(user in users){
+            finalResults.add(UserPair(user.username))
+        }
+
+        for (round in rounds){
+            for(pair in round.pairs.values){
+                finalResults.find{user -> user.username ==  pair[0].username}?.score =
+                    finalResults.find{ user -> user.username ==  pair[0].username}?.score?.plus(
+                        pair[0].score
+                    )!!
+
+                finalResults.find{user -> user.username ==  pair[1].username}?.score =
+                    finalResults.find{ user -> user.username ==  pair[1].username}?.score?.plus(
+                        pair[1].score
+                    )!!
+            }
+        }
+
+        val winner = finalResults.maxWithOrNull(Comparator.comparingInt{it.score})
+
+        if (winner != null) {
+            return winner.username
+        }
+
+        return "Unknown"
     }
 }
