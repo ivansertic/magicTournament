@@ -38,7 +38,7 @@ object TournamentDocumentToObject {
             type = tournamentType,
             subType = tournamentSubType,
             tournamentDateTime = LocalDateTime.parse(
-                "${dateTimeData["dayOfMonth"]}.${month}.${dateTimeData["year"]}. ${dateTimeData["hour"]}:${dateTimeData["minute"]}",
+                "${dateTimeData["dayOfMonth"]}.${month}.${dateTimeData["year"]}. ${String.format("%02d:%02d",dateTimeData["hour"],dateTimeData["minute"])}",
                 DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm")
             ),
             description = data["description"].toString(),
