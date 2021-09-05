@@ -101,6 +101,9 @@ class TournamentDetails : AppCompatActivity() {
 
     private fun checkForEnd() {
         if(!sharedPreferences.getBoolean("isOwner", false)){
+            if(sharedPreferences.getBoolean("isFinished",false)){
+                declareWinner()
+            }
             return
         }
 
