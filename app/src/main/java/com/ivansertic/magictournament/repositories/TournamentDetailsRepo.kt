@@ -80,4 +80,9 @@ class TournamentDetailsRepo {
 
         return tournamentRounds
     }
+
+    suspend fun finishTournament(tournamentId: String) {
+
+        firebaseDatabase.collection("tournaments").document(tournamentId).update("isFinished",true)
+    }
 }

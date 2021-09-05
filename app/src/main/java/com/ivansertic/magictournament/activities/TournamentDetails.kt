@@ -18,6 +18,7 @@ import com.ivansertic.magictournament.models.UserPair
 import com.ivansertic.magictournament.viewmodels.TournamentDetailsViewModel
 import com.ivansertic.magictournament.viewmodels.TournamentInfoViewModel
 import com.ivansertic.magictournament.viewmodels.TournamentLocationVM
+import kotlin.math.round
 
 class TournamentDetails : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -100,6 +101,13 @@ class TournamentDetails : AppCompatActivity() {
             return
         }
 
+        if(sharedPreferences.getBoolean("isFinished",false)){
+            finishButton.visibility = View.GONE
+            startButton.visibility = View.GONE
+
+            return
+        }
+
         if (users.size in 1..4  && roundOneButton.visibility != View.GONE) {
             startButton.visibility = View.GONE
             finishButton.visibility = View.VISIBLE
@@ -115,7 +123,7 @@ class TournamentDetails : AppCompatActivity() {
     private fun setOnClickListeners() {
         startButton.setOnClickListener {
             var roundNumber = when {
-                roundOneButton.visibility != View.GONE -> {
+                (roundOneButton.visibility != View.GONE && roundTwoButton.visibility == View.GONE) -> {
                     2
                 }
                 roundTwoButton.visibility != View.GONE -> {
@@ -139,7 +147,29 @@ class TournamentDetails : AppCompatActivity() {
         }
 
         roundOneButton.setOnClickListener {
+            resultDialog.tournamentRound = rounds.find { round -> round.roundNumber == 1 }!!
             resultDialog.show(supportFragmentManager,"")
+        }
+
+        roundTwoButton.setOnClickListener {
+            resultDialog.tournamentRound = rounds.find { round -> round.roundNumber == 2 }!!
+            resultDialog.show(supportFragmentManager,"")
+        }
+
+        roundThreeButton.setOnClickListener {
+            resultDialog.tournamentRound = rounds.find{ round -> round.roundNumber == 3}!!
+            resultDialog.show(supportFragmentManager,"")
+        }
+
+        finishButton.setOnClickListener {
+            val editor = sharedPreferences.edit()
+
+            editor.putBoolean("isFinished",true)
+            editor.apply()
+
+            finishButton.visibility = View.GONE
+
+            tournamentDetailsVM.finishTournament(tournamentId)
         }
     }
 

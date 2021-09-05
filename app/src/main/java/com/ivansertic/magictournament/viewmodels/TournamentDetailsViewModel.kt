@@ -83,4 +83,10 @@ class TournamentDetailsViewModel: ViewModel() {
         }
 
     }
+
+    fun finishTournament(tournamentId: String) {
+        GlobalScope.launch(Dispatchers.IO){
+            detailsRepository.finishTournament(tournamentId)
+        }
+    }
 }

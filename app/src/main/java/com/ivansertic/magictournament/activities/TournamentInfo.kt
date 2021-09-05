@@ -98,7 +98,7 @@ class TournamentInfo : AppCompatActivity() {
         }
 
         timePicker.addOnPositiveButtonClickListener {
-            timePickerLayout.editText?.setText("${timePicker.hour}:${timePicker.minute}")
+            timePickerLayout.editText?.setText(String.format("%02d:%02d",timePicker.hour,timePicker.minute))
         }
 
         cancelButton.setOnClickListener {
